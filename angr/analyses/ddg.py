@@ -124,7 +124,7 @@ class LiveDefinitions(object):
         Create a branch of the current live definition collection.
 
         :return: A new LiveDefinition instance.
-        :rtype: LiveDefinitions
+        :rtype: angr.analyses.ddg.LiveDefinitions
         """
 
         ld = LiveDefinitions()
@@ -139,7 +139,7 @@ class LiveDefinitions(object):
         Make a hard copy of `self`.
 
         :return: A new LiveDefinition instance.
-        :rtype: LiveDefinitions
+        :rtype: angr.analyses.ddg.LiveDefinitions
         """
 
         ld = LiveDefinitions()
@@ -799,7 +799,7 @@ class DDG(Analysis):
         :param live_defs:       All live definitions prior to reaching this program point.
         :param list statements: A list of VEX statements.
         :returns:               A list of new live definitions.
-        :rtype:                 LiveDefinitions
+        :rtype:                 angr.analyses.ddg.LiveDefinitions
         """
 
         # Make a copy of live_defs
@@ -850,11 +850,6 @@ class DDG(Analysis):
                 else:
                     l.debug("Skip an unsupported action %s.", a)
 
-        #import pprint
-        #pprint.pprint(self._data_graph.edges())
-        #pprint.pprint(self.simplified_data_graph.edges())
-        # import ipdb; ipdb.set_trace()
-
         return self._live_defs
 
     def _def_lookup(self, variable):  # pylint:disable=no-self-use
@@ -862,7 +857,8 @@ class DDG(Analysis):
         This is a backward lookup in the previous defs. Note that, as we are using VSA, it is possible that `variable`
         is affected by several definitions.
 
-        :param LiveDefinitions live_defs: The collection of live definitions.
+        :param angr.analyses.ddg.LiveDefinitions live_defs:
+                            The collection of live definitions.
         :param SimVariable: The variable to lookup for definitions.
         :returns:           A dict {stmt:labels} where label is the number of individual addresses of `addr_list` (or
                             the actual set of addresses depending on the keep_addrs flag) that are definted by stmt.
