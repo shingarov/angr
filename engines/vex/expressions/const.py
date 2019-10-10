@@ -4,10 +4,14 @@ from claripy.fp import FSORT_FLOAT, FSORT_DOUBLE
 from .... import sim_options as o
 from ....errors import UnsupportedIRExprError, SimExpressionError
 
+from claripy import ast
+
 def SimIRExpr_Const(_, state, expr):
     return translate_irconst(state, expr.con)
 
 def translate_irconst(state, c):
+    if isinstance(c.value, ast.base.Base):
+        return c.value
     size = get_type_size(c.type)
     if isinstance(c.value, int):
         return state.solver.BVV(c.value, size)
