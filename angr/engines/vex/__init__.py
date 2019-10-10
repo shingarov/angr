@@ -1,7 +1,11 @@
 from claripy.fp import FSORT_FLOAT, FSORT_DOUBLE
 from pyvex.const import get_type_size
+from claripy import ast
+
 
 def translate_irconst(state, c):
+    if isinstance(c.value, ast.base.Base):
+        return c.value
     size = get_type_size(c.type)
     if isinstance(c.value, (int, long)):
         return state.se.BVV(c.value, size)
