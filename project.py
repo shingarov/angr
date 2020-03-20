@@ -14,7 +14,7 @@ from .misc.ux import deprecated
 
 l = logging.getLogger(name=__name__)
 
-def load_shellcode(shellcode, arch, start_offset=0, load_address=0):
+def load_shellcode(shellcode, arch, entry_point=0, minReadAddress=0, minWriteAddress=0):
     """
     Load a new project based on a string of raw bytecode.
 
@@ -26,10 +26,11 @@ def load_shellcode(shellcode, arch, start_offset=0, load_address=0):
     return Project(
             BytesIO(shellcode),
             main_opts={
-                'backend': 'blob',
+                'backend': 'eliot',
                 'arch': arch,
-                'entry_point': start_offset,
-                'base_addr': load_address,
+                'entry_point': entry_point,
+                'minReadAddress': minReadAddress,
+                'minWriteAddress': minWriteAddress,
             }
         )
 

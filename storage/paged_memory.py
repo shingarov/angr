@@ -329,13 +329,15 @@ class SimPagedMemory:
     """
     def __init__(self, memory_backer=None, permissions_backer=None, pages=None, initialized=None, name_mapping=None, hash_mapping=None, page_size=None, symbolic_addrs=None, check_permissions=False):
         self._cowed = set()
+        #import pudb; pu.db #BORIS
         self._memory_backer = { } if memory_backer is None else memory_backer
         self._permissions_backer = permissions_backer # saved for copying
         self._executable_pages = False if permissions_backer is None else permissions_backer[0]
         self._permission_map = { } if permissions_backer is None else permissions_backer[1]
         self._pages = { } if pages is None else pages
         self._initialized = set() if initialized is None else initialized
-        self._page_size = 0x1000 if page_size is None else page_size
+        self._page_size = 4 if page_size is None else page_size
+        #self._page_size = 0x1000 if page_size is None else page_size
         self._symbolic_addrs = dict() if symbolic_addrs is None else symbolic_addrs
         self.state = None
         self._preapproved_stack = range(0)

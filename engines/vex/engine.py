@@ -441,6 +441,7 @@ class SimEngineVEX(SimEngine):
 
     def handle_expression(self, state, expr):
         try:
+            print(expr)
             handler = self.expr_handlers[expr.tag_int]
             if handler is None:
                 raise IndexError
@@ -682,7 +683,7 @@ class SimEngineVEX(SimEngine):
             fallback = True
             if addr in state.memory and addr + max_size - 1 in state.memory:
                 try:
-                    buff = state.solver.eval(state.memory.load(addr, max_size, inspect=False), cast_to=bytes)
+                    buff = state.solver.eval(state.memory.load(addr, max_size  + 4 - max_size, inspect=False), cast_to=bytes)
                     size = max_size
                     fallback = False
                 except SimError:
